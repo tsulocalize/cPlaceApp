@@ -2,7 +2,7 @@ import React from "react";
 import {Color, PALETTE_COLORS} from "../constants/colors.ts";
 
 interface ColorPaletteProps {
-    onSelectColor: (color: string) => void;
+    onSelectColor: (color: Color) => void;
     selectedColor: string;
 }
 

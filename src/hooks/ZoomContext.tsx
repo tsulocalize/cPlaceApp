@@ -1,12 +1,23 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {createContext, useContext, useState, ReactNode, Dispatch, SetStateAction} from "react";
 
 interface ZoomProp {
     value: number;
 }
 
-const ZoomContext = createContext<ZoomProp>({ x: 0, y: 0 });
+interface ZoomContextType {
+    zoom: ZoomProp
+    setZoom: Dispatch<SetStateAction<ZoomProp>>;
+}
 
-export const useZoom = () => useContext(ZoomContext);
+const ZoomContext = createContext<ZoomContextType | undefined>(undefined);
+
+export const useZoom = () => {
+    const context = useContext(ZoomContext);
+    if (!context) {
+        throw new Error("ZoomContext 에러");
+    }
+    return context;
+}
 
 export const ZoomProvider = ({ children }: { children: ReactNode }) => {
     const [zoom, setZoom] = useState<ZoomProp>({ value: 0.5 });

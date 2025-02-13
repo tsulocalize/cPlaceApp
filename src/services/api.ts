@@ -6,15 +6,16 @@ const api = axios.create({
 });
 
 export const getPixels = async () => {
-    const response = await api.get('/pixels')
-        .catch((error) => {
-            if (error.response && error.response.data) {
-                alert(`에러 코드 : ${error.response.data.code} \n원인: ${error.response.data.message}`);
-            } else {
-                alert('알 수 없는 에러가 발생했습니다.');
-            }
-        });
-    return response.data;
+    try {
+        const response = await api.get('/pixels')
+        return response.data;
+    } catch (error:any) {
+        if (error.response && error.response.data) {
+            alert(`에러 코드 : ${error.response.data.code} \n원인: ${error.response.data.message}`);
+        } else {
+            alert('알 수 없는 에러가 발생했습니다.');
+        }
+    }
 };
 
 export const updatePixel = async (x: number, y: number, color: string): Promise<boolean> => {

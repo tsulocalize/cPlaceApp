@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {usePixelPosition} from "../hooks/PixelPositionContext.tsx";
 
 interface TimerButtonProp {
-    onClick: () => void
+    onClick: () => Promise<boolean>
     timeLimit: number
     selectedColor: string
 }
@@ -30,8 +30,8 @@ const TimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, selectedColo
     }, [remainingTime, clicked]);
 
     const handleClick = async () => {
-        await onClick()
-            .then((success) => {
+        return onClick()
+            .then((success:boolean) => {
                 if (success) {
                     setRemainingTime(timeLimit);
                 }

@@ -1,13 +1,28 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {createContext, useContext, useState, ReactNode, SetStateAction, Dispatch} from "react";
 
 interface PixelPositionProp {
     x: number;
     y: number;
 }
 
-const PixelPositionContext = createContext<PixelPositionProp>({ x: 0, y: 0 });
+interface PixelPositionContextType {
+    pixelPosition: PixelPositionProp;
+    setPixelPosition: Dispatch<SetStateAction<PixelPositionProp>>;
+    hoveredPixelPosition: PixelPositionProp;
+    setHoveredPixelPosition: Dispatch<SetStateAction<PixelPositionProp>>;
+    clicked: boolean;
+    setClicked: Dispatch<SetStateAction<boolean>>;
+}
 
-export const usePixelPosition = () => useContext(PixelPositionContext);
+const PixelPositionContext = createContext<PixelPositionContextType | undefined>(undefined);
+
+export const usePixelPosition = () => {
+    const context = useContext(PixelPositionContext);
+    if (!context) {
+        throw new Error("PixelPosition 에러");
+    }
+    return context;
+}
 
 export const PixelPositionProvider = ({ children }: { children: ReactNode }) => {
     const [pixelPosition, setPixelPosition] = useState<PixelPositionProp>({ x: 0, y: 0 });

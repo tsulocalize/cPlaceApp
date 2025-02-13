@@ -44,7 +44,7 @@ function Home() {
     // WebSocket 훅 사용
     useWebSocket(handlePixelUpdate);
 
-    const handleColorSelect = (color: string) => {
+    const handleColorSelect = (color: Color) => {
         setSelectedColor(color); // 색상 변경
     };
 
