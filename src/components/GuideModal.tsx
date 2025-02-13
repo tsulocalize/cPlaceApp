@@ -51,6 +51,14 @@ export default function GuideModal({ isOpen, onClose }: GuideModalProps) {
         }
     }, [onClose]);
 
+    // ✅ 이미지 미리 로드하기
+    useEffect(() => {
+        steps.forEach((step) => {
+            const img = new Image();
+            img.src = step.image;
+        });
+    }, []);
+
     const handleFinish = () => {
         if (dontShowAgain) {
             localStorage.setItem("guide_seen", "true");
