@@ -67,13 +67,13 @@ const TimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, selectedColo
         <button
             onClick={handleClick}
             disabled={isDisabled} // isDisabled 상태로 제어
-            className={`fixed bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 w-[6.5rem] max-w-full rounded-lg ${isDisabled ? "bg-gray-400 cursor-not-allowed" : ""}`}
+            className={`fixed flex justify-center items-center bottom-[5%] left-1/2 -translate-x-1/2 px-4 py-2 min-w-[120px] w-[9%] h-[8%] text-2xl font-bold max-w-full rounded-lg ${isDisabled ? "bg-gray-400 cursor-not-allowed" : ""}`}
             style={{
                 backgroundColor: selectedColor,
                 color: textColor
             }}
         >
-            {remainingTime > 0 ? formatTime(remainingTime) : "그리기"}
+            {remainingTime > 0 ? formatTime(remainingTime) : "색칠하기"}
         </button>
     );
 }

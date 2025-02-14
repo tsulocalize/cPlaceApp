@@ -38,8 +38,8 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         if (!canvas) return;
 
         const rect = canvas.getBoundingClientRect();
-        const x = Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale));
-        const y = Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale));
+        const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
+        const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
         setPixelPosition(prev => ({...prev, x: x, y: y}));
         setClicked(true);
     };
@@ -49,8 +49,13 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         if (!canvas) return;
 
         const rect = canvas.getBoundingClientRect();
-        const x = Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale));
-        const y = Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale));
+        const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
+        const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
+        console.log("e.clientX:", e.clientX);
+        console.log("rect.left:", rect.left);
+        // console.log("rect.right:", rect.);
+        console.log();
+
         setHoveredPixelPosition(prev => ({...prev, x: x, y: y}));
     };
 

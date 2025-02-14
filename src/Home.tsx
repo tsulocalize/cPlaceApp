@@ -56,8 +56,8 @@ function Home() {
         <div className="flex">
             <ZoomProvider>
                 <CoordinateDisplay/>
-                <div className="fixed left-0 top-0 flex-col items-start h-screen z-50">
-                    <div className="absolute">
+                <div className="fixed left-0 top-0 flex-col items-start h-screen z-50 w-[4%]">
+                    <div className="absolute w-full">
                         <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect}/>
                     </div>
                 </div>
