@@ -51,10 +51,6 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         const rect = canvas.getBoundingClientRect();
         const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
         const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
-        console.log("e.clientX:", e.clientX);
-        console.log("rect.left:", rect.left);
-        // console.log("rect.right:", rect.);
-        console.log();
 
         setHoveredPixelPosition(prev => ({...prev, x: x, y: y}));
     };
