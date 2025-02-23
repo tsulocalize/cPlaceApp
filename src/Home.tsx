@@ -63,7 +63,7 @@ function Home() {
                     </div>
                 </div>
                 <Frame pixels={pixels} selectedColor={selectedColor}/>
-                <TimerButton onClick = {updateColor} timeLimit = {5 } selectedColor={selectedColor}/>
+                <TimerButton onClick = {updateColor} timeLimit = {5 * 60} selectedColor={selectedColor}/>
             </ZoomProvider>
         </div>
     );
