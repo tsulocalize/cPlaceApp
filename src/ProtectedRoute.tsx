@@ -9,8 +9,10 @@ interface ProtectedRouteProp {
 
 const ProtectedRoute:React.FC<ProtectedRouteProp> = ({children, isAuthenticated, setIsAuthenticated}) => {
     const redirectUri = import.meta.env.VITE_REDIRECT;
+    const clientId = import.meta.env.VITE_CLIENT_ID;
+
     const url =
-        `https://chzzk.naver.com/account-interlock?clientId=88e1dfeb-71e1-45bf-b2ff-eb5179bc9d38&redirectUri=${redirectUri}&state=zxclDasdfA25`;
+        `https://chzzk.naver.com/account-interlock?clientId=${clientId}&redirectUri=${redirectUri}&state=zxclDasdfA25`;
 
     useEffect(() => {
         const checkAuth = async () => {
