@@ -19,7 +19,8 @@ interface CanvasProps {
 
 const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const {pixelPosition, hoveredPixelPosition, setHoveredPixelPosition, clicked, setClicked} = usePixelPosition();
+    const {pixelPosition, setPixelPosition, hoveredPixelPosition, setHoveredPixelPosition, clicked, setClicked} = usePixelPosition();
+    const animationFrameId = useRef<number | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -46,20 +47,27 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         const rect = canvas.getBoundingClientRect();
         const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
         const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
-        pixelPosition.current = {x, y};
+        setPixelPosition( {x, y});
         setClicked(true);
     };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+        if (animationFrameId.current) {
+            cancelAnimationFrame(animationFrameId.current);
+        }
 
-        const rect = canvas.getBoundingClientRect();
-        const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
-        const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
+        animationFrameId.current = requestAnimationFrame(() => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
 
-        setHoveredPixelPosition(prev => ({...prev, x: x, y: y}));
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.max(0, Math.floor((e.clientX - rect.left) / (PIXEL_SIZE * scale)));
+            const y = Math.max(0, Math.floor((e.clientY - rect.top) / (PIXEL_SIZE * scale)));
+
+            setHoveredPixelPosition({ x, y }); // 프레임 단위로 업데이트
+        });
     };
+
 
     return (
         <div style={{
@@ -94,8 +102,8 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
                 <div
                     style={{
                         position: "absolute",
-                        top: pixelPosition.current.y * PIXEL_SIZE,
-                        left: pixelPosition.current.x * PIXEL_SIZE,
+                        top: pixelPosition.y * PIXEL_SIZE,
+                        left: pixelPosition.x * PIXEL_SIZE,
                         width: `${PIXEL_SIZE}px`,
                         height: `${PIXEL_SIZE}px`,
                         border: `1px solid ${selectedColor}`,
