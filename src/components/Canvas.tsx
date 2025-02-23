@@ -19,7 +19,7 @@ interface CanvasProps {
 
 const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const {pixelPosition, setPixelPosition, hoveredPixelPosition, setHoveredPixelPosition, clicked, setClicked} = usePixelPosition();
+    const {pixelPosition, hoveredPixelPosition, setHoveredPixelPosition, clicked, setClicked} = usePixelPosition();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -46,7 +46,7 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         const rect = canvas.getBoundingClientRect();
         const x = Math.max(0, Math.floor((e.clientX - rect.left) / ( PIXEL_SIZE * scale)));
         const y = Math.max(0, Math.floor((e.clientY - rect.top) / ( PIXEL_SIZE * scale)));
-        setPixelPosition(prev => ({...prev, x: x, y: y}));
+        pixelPosition.current = {x, y};
         setClicked(true);
     };
 
@@ -94,8 +94,8 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
                 <div
                     style={{
                         position: "absolute",
-                        top: pixelPosition.y * PIXEL_SIZE,
-                        left: pixelPosition.x * PIXEL_SIZE,
+                        top: pixelPosition.current.y * PIXEL_SIZE,
+                        left: pixelPosition.current.x * PIXEL_SIZE,
                         width: `${PIXEL_SIZE}px`,
                         height: `${PIXEL_SIZE}px`,
                         border: `1px solid ${selectedColor}`,

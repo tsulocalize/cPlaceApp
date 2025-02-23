@@ -1,4 +1,13 @@
-import {createContext, useContext, useState, ReactNode, SetStateAction, Dispatch} from "react";
+import {
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
+    SetStateAction,
+    Dispatch,
+    useRef,
+    MutableRefObject
+} from "react";
 
 interface PixelPositionProp {
     x: number;
@@ -6,8 +15,7 @@ interface PixelPositionProp {
 }
 
 interface PixelPositionContextType {
-    pixelPosition: PixelPositionProp;
-    setPixelPosition: Dispatch<SetStateAction<PixelPositionProp>>;
+    pixelPosition: MutableRefObject<PixelPositionProp>;
     hoveredPixelPosition: PixelPositionProp;
     setHoveredPixelPosition: Dispatch<SetStateAction<PixelPositionProp>>;
     clicked: boolean;
@@ -25,7 +33,7 @@ export const usePixelPosition = () => {
 }
 
 export const PixelPositionProvider = ({ children }: { children: ReactNode }) => {
-    const [pixelPosition, setPixelPosition] = useState<PixelPositionProp>({ x: 0, y: 0 });
+    const pixelPosition = useRef<PixelPositionProp>({ x: 0, y: 0 });
     const [hoveredPixelPosition, setHoveredPixelPosition] = useState<PixelPositionProp>({ x: 0, y: 0 });
     const [clicked, setClicked] = useState<boolean>(false);
 
@@ -33,7 +41,6 @@ export const PixelPositionProvider = ({ children }: { children: ReactNode }) => 
         <PixelPositionContext.Provider
             value={{
                 pixelPosition: pixelPosition,
-                setPixelPosition: setPixelPosition,
                 hoveredPixelPosition: hoveredPixelPosition,
                 setHoveredPixelPosition: setHoveredPixelPosition,
                 clicked: clicked,
