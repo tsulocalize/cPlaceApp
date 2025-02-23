@@ -1,9 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
 import Canvas from "./Canvas.tsx";
 import {useZoom} from "../hooks/ZoomContext.tsx";
+import {Color} from "../constants/colors.ts";
+
+interface pixelData {
+    color: Color;
+    timeStamp: number;
+}
 
 interface CanvasContainerProps {
-    pixels: Map<string, string>
+    pixels: Map<string, pixelData>
     selectedColor: string;
 }
 

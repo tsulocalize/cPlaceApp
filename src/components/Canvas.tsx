@@ -3,10 +3,16 @@ import React, {
     useEffect,
 } from "react";
 import {PIXEL_HORIZONTAL_COUNT, PIXEL_SIZE, PIXEL_VERTICAL_COUNT} from "../constants/constant.ts";
-import {usePixelPosition} from "../hooks/PixelPositionContext.tsx"; // API 함수 임포트
+import {usePixelPosition} from "../hooks/PixelPositionContext.tsx";
+import {Color} from "../constants/colors.ts"; // API 함수 임포트
+
+interface pixelData {
+    color: Color;
+    timeStamp: number;
+}
 
 interface CanvasProps {
-    pixels: Map<string, string>
+    pixels: Map<string, pixelData>
     selectedColor: string;
     scale: number;
 }
@@ -22,9 +28,9 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        pixels.forEach((color, key) => {
+        pixels.forEach((data, key) => {
             const [x, y] = key.split(',').map(Number);
-            ctx.fillStyle = color;
+            ctx.fillStyle = data.color;
             ctx.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
         });
     }, [pixels]);
@@ -63,6 +69,7 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
         }}
         >
             <canvas
+                className="image-rendering-pixelated"
                 ref={canvasRef}
                 width={PIXEL_HORIZONTAL_COUNT * PIXEL_SIZE}
                 height={PIXEL_VERTICAL_COUNT * PIXEL_SIZE}
@@ -77,7 +84,7 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
                         left: hoveredPixelPosition.x * PIXEL_SIZE,
                         width: `${PIXEL_SIZE}px`,
                         height: `${PIXEL_SIZE}px`,
-                        border: `2px solid ${selectedColor}`,
+                        border: `1px solid ${selectedColor}`,
                         boxSizing: "border-box",
                         pointerEvents: "none",
                     }}
@@ -91,7 +98,7 @@ const Canvas: React.FC<CanvasProps> = ({pixels, selectedColor, scale}) => {
                         left: pixelPosition.x * PIXEL_SIZE,
                         width: `${PIXEL_SIZE}px`,
                         height: `${PIXEL_SIZE}px`,
-                        border: `2px solid ${selectedColor}`,
+                        border: `1px solid ${selectedColor}`,
                         boxSizing: "border-box",
                         pointerEvents: "none",
                     }}

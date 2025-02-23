@@ -8,7 +8,18 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.image-rendering-pixelated': {
+          imageRendering: 'pixelated',
+        },
+        '.image-rendering-crisp-edges': {
+          imageRendering: 'crisp-edges',
+        },
+      })
+    },
+  ],
 };
 
 

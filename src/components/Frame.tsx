@@ -1,7 +1,13 @@
 import CanvasContainer from "./CanvasContainer.tsx";
+import {Color} from "../constants/colors.ts";
+
+interface pixelData {
+    color: Color;
+    timeStamp: number;
+}
 
 interface FrameProps {
-    pixels: Map<string, string>
+    pixels: Map<string, pixelData>
     selectedColor: string;
 }
 
