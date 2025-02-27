@@ -6,6 +6,9 @@ export default {
       gridTemplateColumns: {
         50: "repeat(50, minmax(0, 1fr))",
       },
+      fontFamily: {
+        sans: ['Noto Sans KR', 'sans-serif'],
+      },
     },
   },
   plugins: [
