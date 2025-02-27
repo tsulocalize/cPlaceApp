@@ -1,16 +1,18 @@
 import { useEffect, useRef } from "react";
+import {usePixelQueue} from "./usePixelQueue.ts";
+import {Color} from "../constants/colors.ts";
 
-interface PixelMedia {
-    x: number;
-    y: number;
-    colorIndex: number;
-    timeStamp: number;
+interface PixelData {
+    x: number
+    y: number
+    colorIndex: number
 }
 
-export const useWebSocket = (onMessage: (pixels: PixelMedia[]) => void) => {
+export const useWebSocket = (isLoading: boolean) => {
     const socketRef = useRef<WebSocket | null>(null);
-    const messageQueue: PixelMedia[] = []; // 💡 웹소켓 메시지를 저장할 큐
-    let isProcessing = false; // 💡 현재 메시지 처리 중인지 확인하는 플래그
+    const { addPixelToQueue } = usePixelQueue();
+    const loadingQueue:PixelData[] = [];
+    const useLoadingQueue = useRef(true);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -24,16 +26,13 @@ export const useWebSocket = (onMessage: (pixels: PixelMedia[]) => void) => {
 
             ws.onmessage = (event) => {
                 const buffer = new DataView(event.data);
-                for (let i = 0; i < buffer.byteLength; i += 10) {
+                for (let i = 0; i < buffer.byteLength; i += 6) {
                     const x = buffer.getUint16(i, false);
                     const y = buffer.getUint16(i + 2, false);
                     const colorIndex = buffer.getUint8(i + 4);
-                    const timeStamp = buffer.getUint32(i + 6, false);
 
-                    messageQueue.push({ x, y, colorIndex, timeStamp });
+                    waitLoading(x, y, colorIndex);
                 }
-
-                processQueue(); // 💡 메시지 처리 함수 실행
             };
 
             ws.onclose = () => {
@@ -52,22 +51,26 @@ export const useWebSocket = (onMessage: (pixels: PixelMedia[]) => void) => {
         }
     }, []);
 
-    // 💡 메시지를 순서대로 실행하는 함수
-    const processQueue = async () => {
-        if (isProcessing) return; // 이미 실행 중이면 리턴
-        isProcessing = true;
-
-        const promise = [];
-
-        while (messageQueue.length > 0) {
-            const updatedPixel = messageQueue.shift(); // 💡 큐에서 가장 오래된 메시지 꺼냄
-            if (!updatedPixel) continue;
-
-            // 💡 메시지 내부의 픽셀들은 병렬 처리
-            promise.push(updatedPixel);
+    const waitLoading = (x:number, y:number, colorIndex:number) => {
+        if (useLoadingQueue.current) {
+            loadingQueue.push({x, y, colorIndex});
+            return;
         }
-        onMessage(promise);
 
-        isProcessing = false;
-    };
+        addPixelToQueue(x, y, Object.values(Color)[colorIndex]);
+    }
+
+    useEffect(() => {
+        if (!isLoading) {
+            while (loadingQueue.length > 0) {
+                const pixelData = loadingQueue.shift();
+                if (!pixelData) return;
+                addPixelToQueue(pixelData.x, pixelData.y, Object.values(Color)[pixelData.colorIndex]);
+            }
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
+        useLoadingQueue.current = isLoading;
+    }, [isLoading]);
 };

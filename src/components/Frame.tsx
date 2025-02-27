@@ -1,17 +1,11 @@
 import CanvasContainer from "./CanvasContainer.tsx";
-import {Color} from "../constants/colors.ts";
-
-interface pixelData {
-    color: Color;
-    timeStamp: number;
-}
+import React from "react";
 
 interface FrameProps {
-    pixels: Map<string, pixelData>
     selectedColor: string;
 }
 
-const Frame:React.FC<FrameProps> = ({pixels, selectedColor}) => {
+const Frame:React.FC<FrameProps> = ({selectedColor}) => {
 
     return (
         <div style={{
@@ -20,7 +14,7 @@ const Frame:React.FC<FrameProps> = ({pixels, selectedColor}) => {
             border: "1px solid black"
         }}
              >
-            <CanvasContainer pixels={pixels} selectedColor={selectedColor}/>
+            <CanvasContainer selectedColor={selectedColor}/>
         </div>
 
     )

@@ -5,6 +5,36 @@ const api = axios.create({
     withCredentials: true, // 쿠키 포함 설정
 });
 
+export const getPixels = async (): Promise<Uint8Array> => {
+    return await api.get('/pixels', {responseType: "arraybuffer"})
+        .then((response) => {
+            return new Uint8Array(response.data);
+        })
+        .catch((error) => {
+            if (error.response && error.response.data) {
+                alert(`에러 코드 : ${error.response.data.code} \n원인: ${error.response.data.message}`);
+            } else {
+                alert('알 수 없는 에러가 발생했습니다.');
+            }
+            throw Error();
+        });
+};
+
+export const getDirtySet = async (lastUpdated:bigint): Promise<Uint8Array> => {
+    return await api.get(`/dirty-set?lastUpdated=${lastUpdated}`, {responseType: "arraybuffer"})
+        .then((response) => {
+            return new Uint8Array(response.data);
+        })
+        .catch((error) => {
+            if (error.response && error.response.data) {
+                alert(`에러 코드 : ${error.response.data.code} \n원인: ${error.response.data.message}`);
+            } else {
+                alert('알 수 없는 에러가 발생했습니다.');
+            }
+            throw Error();
+        });
+};
+
 export const updatePixel = async (x: number, y: number, color: string): Promise<boolean> => {
     return await api.post('/pixels', { x, y, color })
         .then((response) => {
