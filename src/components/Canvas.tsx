@@ -80,8 +80,9 @@ const Canvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
                         position: "absolute",
                         top: hoveredPixelPosition.y * PIXEL_SIZE,
                         left: hoveredPixelPosition.x * PIXEL_SIZE,
-                        border: `${PIXEL_SIZE / 2}px solid ${selectedColor}`,
+                        border: `${PIXEL_SIZE}px solid ${selectedColor}`,
                         boxSizing: "border-box",
+                        transform: `scale(0.5)`,
                         pointerEvents: "none",
                     }}
                 />
@@ -92,8 +93,9 @@ const Canvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
                         position: "absolute",
                         top: pixelPosition.y * PIXEL_SIZE,
                         left: pixelPosition.x * PIXEL_SIZE,
-                        border: `${PIXEL_SIZE / 2}px solid ${selectedColor}`,
+                        border: `${PIXEL_SIZE}px solid ${selectedColor}`,
                         boxSizing: "border-box",
+                        transform: `scale(0.5)`,
                         pointerEvents: "none",
                     }}
                 />
