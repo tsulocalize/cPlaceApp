@@ -9,10 +9,10 @@ export const useInitialize = () => {
         const pixelData = new Uint8Array(PIXEL_HORIZONTAL_COUNT * PIXEL_VERTICAL_COUNT * 4);
         for (let i = offset; i < buffer.length; i++) {
             const [r, g, b, a] = hexToRGBA(Object.values(Color)[buffer[i]]);
-            pixelData[i * 4] = r;
-            pixelData[i * 4 + 1] = g;
-            pixelData[i * 4 + 2] = b;
-            pixelData[i * 4 + 3] = a;
+            pixelData[(i - offset) * 4] = r;
+            pixelData[(i - offset) * 4 + 1] = g;
+            pixelData[(i - offset) * 4 + 2] = b;
+            pixelData[(i - offset) * 4 + 3] = a;
         }
 
         const imageData = new ImageData(new Uint8ClampedArray(pixelData), PIXEL_HORIZONTAL_COUNT, PIXEL_VERTICAL_COUNT);
