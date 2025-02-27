@@ -37,7 +37,7 @@ const CoordinateDisplay: React.FC = () => {
 
     return (
         <div
-            className="flex items-center justify-center font-mono fixed top-[3%] left-1/2 transform -translate-x-1/2 bg-white text-black px-3 py-1 rounded shadow-md text-lg font-semibold w-[13%] min-w-[160px] max-w-full h-[5%] "
+            className="flex items-center justify-center font-sans fixed top-[3%] left-1/2 transform -translate-x-1/2 bg-white text-black px-3 py-1 rounded shadow-md text-lg font-semibold w-[13%] min-w-[160px] max-w-full h-[5%] "
         >
             {`(${displayedPosition.x},${displayedPosition.y}) x${zoom.value.toFixed(1)}`}
         </div>
