@@ -38,6 +38,7 @@ body {
 @media (max-width: 768px) {
   body {
     display: block;
+    height: 100dvh;
   }
 }
 

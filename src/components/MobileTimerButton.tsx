@@ -67,7 +67,7 @@ const MobileTimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, select
         <button
             onClick={handleClick}
             disabled={isDisabled} // isDisabled 상태로 제어
-            className={`font-sans fixed flex justify-center items-center bottom-[12%] left-1/2 -translate-x-1/2 px-4 py-2 min-w-[150px] w-[20%] h-[7%] text-3xl font-bold max-w-full rounded-lg ${isDisabled ? "bg-gray-400 cursor-not-allowed" : ""}`}
+            className={`font-sans fixed flex justify-center items-center bottom-[5%] left-1/2 -translate-x-1/2 px-4 py-2 min-w-[150px] w-[20%] h-[7%] text-3xl font-bold max-w-full rounded-lg ${isDisabled ? "bg-gray-400 cursor-not-allowed" : ""}`}
             style={{
                 backgroundColor: selectedColor,
                 color: textColor
