@@ -70,7 +70,7 @@ function MobileHome() {
     }
 
     return (
-        <div className="flex bg-[#242424]">
+        <div className="flex">
             <ZoomProvider>
                 <MobileCoordinateDisplay/>
                 <div className="flex flex-col gap-10 mt-32">
