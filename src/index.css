@@ -35,6 +35,12 @@ body {
   min-height: 100vh;
 }
 
+@media (max-width: 768px) {
+  body {
+    display: block;
+  }
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

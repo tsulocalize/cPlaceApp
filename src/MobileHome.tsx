@@ -73,7 +73,7 @@ function MobileHome() {
         <div className="flex">
             <ZoomProvider>
                 <MobileCoordinateDisplay/>
-                <div className="flex flex-col gap-10 mb-10">
+                <div className="flex flex-col gap-10 mt-32">
                     <Frame selectedColor={selectedColor}/>
                     <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
                 </div>
