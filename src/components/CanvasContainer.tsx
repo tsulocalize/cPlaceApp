@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Canvas from "./Canvas.tsx";
 import {useZoom} from "../hooks/ZoomContext.tsx";
 import {MAX_ZOOM, MIN_ZOOM} from "../constants/constant.ts";
+import {useScale} from "../hooks/ScaleContext.tsx";
 
 interface CanvasContainerProps {
     selectedColor: string;
@@ -9,7 +10,7 @@ interface CanvasContainerProps {
 
 const CanvasContainer:React.FC<CanvasContainerProps> = ({selectedColor}) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [scale, setScale] = useState(1);
+    const {scale, setScale} = useScale();
     const [position, setPosition] = useState({x : 0, y : 0});
     const startPosition = useRef({x : 0, y : 0});
     const [isDragging, setIsDragging] = useState(false);

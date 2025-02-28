@@ -37,7 +37,7 @@ const MobileCoordinateDisplay: React.FC = () => {
 
     return (
         <div
-            className="flex items-center justify-center font-sans fixed top-[5%] left-1/2 transform -translate-x-1/2 bg-white text-black px-3 py-1 rounded shadow-md text-2xl font-semibold w-[40%] min-w-[160px] max-w-full h-[5%] whitespace-pre"
+            className="flex items-center justify-center font-sans bg-white text-black px-3 py-1 rounded shadow-md text-2xl font-semibold w-[40%] min-w-[160px] max-w-full h-[100%] whitespace-pre"
         >
             {`(${displayedPosition.x},${displayedPosition.y})   x${zoom.value.toFixed(1)}`}
         </div>

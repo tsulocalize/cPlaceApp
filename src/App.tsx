@@ -7,6 +7,7 @@ import GuideModal from "./components/GuideModal.tsx";
 import {PixelPositionProvider} from "./hooks/PixelPositionContext.tsx";
 import MobileHome from "./MobileHome.tsx";
 import MobileGuideModal from "./components/MobileGuideModal.tsx";
+import {ScaleProvider} from "./hooks/ScaleContext.tsx";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -22,6 +23,7 @@ function App() {
 
     return (
         <PixelPositionProvider>
+        <ScaleProvider>
             <BrowserRouter>
                 <Routes>
                     <Route
@@ -45,6 +47,7 @@ function App() {
                     <Route path="/login" element={<LoginRoute setIsAuthenticated={setIsAuthenticated}/>} />
                 </Routes>
             </BrowserRouter>
+        </ScaleProvider>
         </PixelPositionProvider>
     );
 }

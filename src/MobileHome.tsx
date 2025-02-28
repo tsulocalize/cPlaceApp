@@ -11,6 +11,7 @@ import {usePixelQueue} from "./hooks/usePixelQueue.ts";
 import {useInitialize} from "./hooks/useInitailize.ts";
 import MobileTimerButton from "./components/MobileTimerButton.tsx";
 import MobileCoordinateDisplay from "./components/MobileCoordinateDisplay.tsx";
+import MobileZoomController from "./components/MobileZoomController.tsx";
 
 function MobileHome() {
     const [selectedColor, setSelectedColor] = useState(Color.BLACK);
@@ -70,17 +71,22 @@ function MobileHome() {
     }
 
     return (
-        <div className="flex">
+        <div className="flex justify-center">
             <ZoomProvider>
-                <MobileCoordinateDisplay/>
-                <div className="flex flex-col gap-10 mt-32">
-                    <Frame selectedColor={selectedColor}/>
-                    <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
+                <div className="flex fixed top-[5%] w-[100%] justify-center items-center h-[5%] gap-5">
+                    <MobileZoomController key="minus" isPlus={false}/>
+                    <MobileCoordinateDisplay/>
+                    <MobileZoomController key="plus" isPlus={true}/>
                 </div>
-                <MobileTimerButton onClick = {updateColor} timeLimit = { import.meta.env.VITE_TIME_LIMIT } selectedColor={selectedColor}/>
+                    <div className="flex flex-col gap-10 mt-32 ">
+                        <Frame selectedColor={selectedColor}/>
+                        <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
+                    </div>
+                    <MobileTimerButton onClick={updateColor} timeLimit={import.meta.env.VITE_TIME_LIMIT}
+                                       selectedColor={selectedColor}/>
             </ZoomProvider>
         </div>
-    );
+);
 }
 
 export default MobileHome;
