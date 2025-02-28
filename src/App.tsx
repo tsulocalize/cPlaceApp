@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import Home from "./Home.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import LoginRoute from "./LoginRoute.tsx";
@@ -13,10 +13,11 @@ function App() {
     const [isModalOpen, setIsModalOpen] = useState(
         localStorage.getItem("guide_seen") !== "true"
     );
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (window.location.pathname === "/" && window.matchMedia("(max-width: 768px").matches) {
-            window.location.href = "/mobile"
+            navigate("/mobile");
         }
     }, []);
 
