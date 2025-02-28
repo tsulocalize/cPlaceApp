@@ -15,7 +15,7 @@ function App() {
     );
 
     useEffect(() => {
-        if (window.location.pathname === "/" && window.matchMedia("(max-width: 768px").matches) {
+        if (window.location.pathname === "/" && window.matchMedia("(max-width: 768px)").matches) {
             window.location.href = "/mobile";
         }
     }, []);
