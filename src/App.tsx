@@ -17,7 +17,10 @@ function App() {
 
     useEffect(() => {
         if (window.location.pathname === "/" && window.matchMedia("(max-width: 768px").matches) {
+            alert("A");
             navigate("/mobile");
+        } else {
+            alert("b");
         }
     }, []);
 
