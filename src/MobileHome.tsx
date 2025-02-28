@@ -4,21 +4,38 @@ import {useEffect, useRef, useState} from "react";
 import {useWebSocket} from "./hooks/useWebSocket.ts";
 import {getDirtySet, getPixels, updatePixel} from "./services/api.ts";
 import Frame from "./components/Frame.tsx";
-import CoordinateDisplay from "./components/CoordinateDisplay.tsx";
 import {usePixelPosition} from "./hooks/PixelPositionContext.tsx";
 import {ZoomProvider} from "./hooks/ZoomContext.tsx";
-import TimerButton from "./components/TimerButton.tsx";
 import {Color} from "./constants/colors.ts";
 import {usePixelQueue} from "./hooks/usePixelQueue.ts";
 import {useInitialize} from "./hooks/useInitailize.ts";
+import MobileTimerButton from "./components/MobileTimerButton.tsx";
+import MobileCoordinateDisplay from "./components/MobileCoordinateDisplay.tsx";
 
-function Home() {
+function MobileHome() {
     const [selectedColor, setSelectedColor] = useState(Color.BLACK);
     const {pixelPosition} = usePixelPosition();
     const { addPixelToQueue } = usePixelQueue();
     const { drawMap } = useInitialize();
     const lastUpdated = useRef<bigint | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+
+
+
+    useEffect(() => {
+        const width = window.outerWidth
+        const divider = width >= 425 ? 625 : width >= 375 ? 575 : 525
+        const scale = width / divider
+        const metaViewport = document.querySelector("meta[name=viewport]");
+        if (metaViewport) {
+            metaViewport.setAttribute("content", `width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`);
+        } else {
+            const metaTag = document.createElement("meta");
+            metaTag.setAttribute("name", "viewport");
+            metaTag.setAttribute("content", `width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`);
+            document.head.appendChild(metaTag);
+        }
+    }, []);
 
     useEffect(() => {
         getPixels()
@@ -55,20 +72,18 @@ function Home() {
     return (
         <div className="flex">
             <ZoomProvider>
-                <CoordinateDisplay/>
-                <div className="fixed left-0 top-0 flex-col items-start h-screen z-40 w-[4%]">
-                    <div className="absolute w-full">
-                        <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={false}/>
-                    </div>
+                <MobileCoordinateDisplay/>
+                <div className="flex flex-col gap-10 mb-10">
+                    <Frame selectedColor={selectedColor}/>
+                    <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
                 </div>
-                <Frame selectedColor={selectedColor}/>
-                <TimerButton onClick = {updateColor} timeLimit = { import.meta.env.VITE_TIME_LIMIT } selectedColor={selectedColor}/>
+                <MobileTimerButton onClick = {updateColor} timeLimit = { import.meta.env.VITE_TIME_LIMIT } selectedColor={selectedColor}/>
             </ZoomProvider>
         </div>
     );
 }
 
-export default Home;
+export default MobileHome;
 
 function getLongFromUint8Array(uint8Array:Uint8Array, littleEndian = false) {
     if (uint8Array.length < 8) {

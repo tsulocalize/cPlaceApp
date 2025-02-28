@@ -4,10 +4,11 @@ import {Color, PALETTE_COLORS} from "../constants/colors.ts";
 interface ColorPaletteProps {
     onSelectColor: (color: Color) => void;
     selectedColor: string;
+    isMobile: boolean
 }
 
-const ColorPalette: React.FC<ColorPaletteProps> = ({ onSelectColor, selectedColor }) => {
-    return (
+const ColorPalette: React.FC<ColorPaletteProps> = ({ onSelectColor, selectedColor, isMobile }) => {
+    return (!isMobile? (
         <div className="flex flex-col min-w-[60px] h-screen w-full items-center justify-between overflow-y-auto bg-gray-200 p-2">
             {PALETTE_COLORS.map((color) => (
                 <div
@@ -25,7 +26,28 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ onSelectColor, selectedColo
                 ></div>
             ))}
         </div>
-    );
+    ) : (
+        <div className="flex flex-col w-full items-center bg-gray-200 p-2">
+            <div className="grid grid-cols-8 gap-1 w-full">
+                {PALETTE_COLORS.map((color) => (
+                    <div
+                        key={color}
+                        className={`w-full aspect-square cursor-pointer ${selectedColor === color ? 'border-2' : ''}`}
+                        style={{
+                            backgroundColor: color,
+                            borderColor: selectedColor !== color
+                                ? "transparent"
+                                : color === Color.BLACK
+                                    ? "white"
+                                    : "black",
+                        }}
+                        onClick={() => onSelectColor(color)}
+                    ></div>
+                ))}
+            </div>
+        </div>
+
+    ));
 };
 
 export default ColorPalette;
