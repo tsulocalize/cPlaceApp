@@ -80,12 +80,12 @@ const Canvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
                         position: "absolute",
                         top: hoveredPixelPosition.y * PIXEL_SIZE,
                         left: hoveredPixelPosition.x * PIXEL_SIZE,
-                        width: `${PIXEL_SIZE}px`,
-                        height: `${PIXEL_SIZE}px`,
+                        width: `${Math.round(PIXEL_SIZE * window.devicePixelRatio)}px`,
+                        height: `${Math.round(PIXEL_SIZE * window.devicePixelRatio)}px`,
                         backgroundColor: `${selectedColor}`,
                         boxSizing: "border-box",
                         pointerEvents: "none",
-                        willChange: "transform",
+                        willChange: "transform"
                     }}
                 />
             )}
@@ -93,10 +93,10 @@ const Canvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
                 <div
                     style={{
                         position: "absolute",
-                        top: Math.round(pixelPosition.y * PIXEL_SIZE),
-                        left: Math.round(pixelPosition.x * PIXEL_SIZE),
-                        width: `${Math.round(PIXEL_SIZE)}px`,
-                        height: `${Math.round(PIXEL_SIZE)}px`,
+                        top: pixelPosition.y * PIXEL_SIZE,
+                        left: pixelPosition.x * PIXEL_SIZE,
+                        width: `${Math.round(PIXEL_SIZE * window.devicePixelRatio)}px`,
+                        height: `${Math.round(PIXEL_SIZE * window.devicePixelRatio)}px`,
                         backgroundColor: `${selectedColor}`,
                         boxSizing: "border-box",
                         pointerEvents: "none",
