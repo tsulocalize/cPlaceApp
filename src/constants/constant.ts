@@ -3,5 +3,5 @@ export const PIXEL_VERTICAL_COUNT = 500;
 export const PIXEL_HORIZONTAL_COUNT = 500;
 
 export const MIN_ZOOM = 1;
-export const MAX_ZOOM = 5;
+export const MAX_ZOOM = 6;
 
