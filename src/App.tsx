@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./Home.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import LoginRoute from "./LoginRoute.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import GuideModal from "./components/GuideModal.tsx";
 import {PixelPositionProvider} from "./hooks/PixelPositionContext.tsx";
 import MobileHome from "./MobileHome.tsx";
@@ -14,12 +14,6 @@ function App() {
     const [isModalOpen, setIsModalOpen] = useState(
         localStorage.getItem("guide_seen") !== "true"
     );
-
-    useEffect(() => {
-        if (window.location.pathname === "/" && window.matchMedia("(max-width: 768px)").matches) {
-            window.location.href = "/mobile";
-        }
-    }, []);
 
     return (
         <PixelPositionProvider>
