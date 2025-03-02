@@ -2,15 +2,15 @@ import React, {useState, useEffect} from "react";
 import {usePixelPosition} from "../hooks/PixelPositionContext.tsx";
 
 interface TimerButtonProp {
-    onClick: () => Promise<boolean>
+    onTouch: () => Promise<boolean>
     timeLimit: number
     selectedColor: string
 }
 
-const MobileTimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, selectedColor}) => {
+const MobileTimerButton:React.FC<TimerButtonProp> = ({onTouch, timeLimit, selectedColor}) => {
     const [remainingTime, setRemainingTime] = useState(0);
     const [isDisabled, setIsDisabled] = useState(false); // disabled 상태를 별도로 관리
-    const {clicked, setClicked} = usePixelPosition();
+    const {touched, setTouched} = usePixelPosition();
 
     useEffect(() => {
         let timerId: NodeJS.Timeout;
@@ -21,21 +21,21 @@ const MobileTimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, select
                 setRemainingTime((prev) => prev - 1);
             }, 1000);
         } else {
-            if (clicked) {
+            if (touched) {
                 setIsDisabled(false); // 타이머 끝나면 버튼 활성화
             }
         }
 
         return () => clearTimeout(timerId); // cleanup
-    }, [remainingTime, clicked]);
+    }, [remainingTime, touched]);
 
-    const handleClick = async () => {
-        return onClick()
+    const handleTouch = async () => {
+        return onTouch()
             .then((success:boolean) => {
                 if (success) {
                     setRemainingTime(timeLimit);
                 }
-                setClicked(false);
+                setTouched(false);
             });
     };
 
@@ -65,7 +65,7 @@ const MobileTimerButton:React.FC<TimerButtonProp> = ({onClick, timeLimit, select
 
     return (
         <button
-            onClick={handleClick}
+            onTouchStart={handleTouch}
             disabled={isDisabled} // isDisabled 상태로 제어
             className={`font-sans fixed flex justify-center items-center bottom-[5%] left-1/2 -translate-x-1/2 px-4 py-2 min-w-[150px] w-[20%] h-[7%] text-3xl font-bold max-w-full rounded-lg ${isDisabled ? "bg-gray-400 cursor-not-allowed" : ""}`}
             style={{

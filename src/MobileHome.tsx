@@ -3,7 +3,6 @@ import ColorPalette from "./components/ColorPalette.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useWebSocket} from "./hooks/useWebSocket.ts";
 import {getDirtySet, getPixels, updatePixel} from "./services/api.ts";
-import Frame from "./components/Frame.tsx";
 import {usePixelPosition} from "./hooks/PixelPositionContext.tsx";
 import {ZoomProvider} from "./hooks/ZoomContext.tsx";
 import {Color} from "./constants/colors.ts";
@@ -12,6 +11,7 @@ import {useInitialize} from "./hooks/useInitailize.ts";
 import MobileTimerButton from "./components/MobileTimerButton.tsx";
 import MobileCoordinateDisplay from "./components/MobileCoordinateDisplay.tsx";
 import MobileZoomController from "./components/MobileZoomController.tsx";
+import MobileFrame from "./components/MobileFrame.tsx";
 
 function MobileHome() {
     const [selectedColor, setSelectedColor] = useState(Color.BLACK);
@@ -20,23 +20,6 @@ function MobileHome() {
     const { drawMap } = useInitialize();
     const lastUpdated = useRef<bigint | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-
-
-
-    useEffect(() => {
-        const width = window.outerWidth
-        const divider = width >= 425 ? 625 : width >= 375 ? 575 : 525
-        const scale = width / divider
-        const metaViewport = document.querySelector("meta[name=viewport]");
-        if (metaViewport) {
-            metaViewport.setAttribute("content", `width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`);
-        } else {
-            const metaTag = document.createElement("meta");
-            metaTag.setAttribute("name", "viewport");
-            metaTag.setAttribute("content", `width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`);
-            document.head.appendChild(metaTag);
-        }
-    }, []);
 
     useEffect(() => {
         getPixels()
@@ -73,20 +56,20 @@ function MobileHome() {
     return (
         <div className="flex justify-center">
             <ZoomProvider>
-                <div className="flex fixed top-[5%] w-[100%] justify-center items-center h-[5%] gap-5">
+                <div className="flex fixed top-[6%] w-[80%] justify-center items-center h-[5%] gap-3">
                     <MobileZoomController key="minus" isPlus={false}/>
                     <MobileCoordinateDisplay/>
                     <MobileZoomController key="plus" isPlus={true}/>
                 </div>
-                    <div className="flex flex-col gap-10 mt-32 ">
-                        <Frame selectedColor={selectedColor}/>
+                    <div className="flex flex-col gap-6 mt-20 ">
+                        <MobileFrame selectedColor={selectedColor}/>
                         <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
                     </div>
-                    <MobileTimerButton onClick={updateColor} timeLimit={import.meta.env.VITE_TIME_LIMIT}
+                    <MobileTimerButton onTouch={updateColor} timeLimit={import.meta.env.VITE_TIME_LIMIT}
                                        selectedColor={selectedColor}/>
             </ZoomProvider>
         </div>
-);
+    );
 }
 
 export default MobileHome;

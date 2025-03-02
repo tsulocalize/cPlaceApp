@@ -12,6 +12,8 @@ interface PixelPositionContextType {
     setHoveredPixelPosition: Dispatch<SetStateAction<PixelPositionProp>>;
     clicked: boolean;
     setClicked: Dispatch<SetStateAction<boolean>>;
+    touched: boolean;
+    setTouched: Dispatch<SetStateAction<boolean>>;
 }
 
 const PixelPositionContext = createContext<PixelPositionContextType | undefined>(undefined);
@@ -28,6 +30,7 @@ export const PixelPositionProvider = ({ children }: { children: ReactNode }) => 
     const [pixelPosition, setPixelPosition] = useState<PixelPositionProp>({ x: 0, y: 0 });
     const [hoveredPixelPosition, setHoveredPixelPosition] = useState<PixelPositionProp>({ x: 0, y: 0 });
     const [clicked, setClicked] = useState<boolean>(false);
+    const [touched, setTouched] = useState<boolean>(false);
 
     return (
         <PixelPositionContext.Provider
@@ -37,7 +40,9 @@ export const PixelPositionProvider = ({ children }: { children: ReactNode }) => 
                 hoveredPixelPosition: hoveredPixelPosition,
                 setHoveredPixelPosition: setHoveredPixelPosition,
                 clicked: clicked,
-                setClicked: setClicked
+                setClicked: setClicked,
+                touched: touched,
+                setTouched: setTouched
         }}>
             {children}
         </PixelPositionContext.Provider>
