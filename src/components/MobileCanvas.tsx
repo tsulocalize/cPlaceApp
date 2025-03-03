@@ -12,6 +12,7 @@ interface CanvasProps {
 }
 
 const MobileCanvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
+    // const overlayCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const {pixelPosition, setPixelPosition} = usePixelPosition();
 
@@ -37,6 +38,24 @@ const MobileCanvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
         setPixelPosition({ x, y });
     };
 
+    // const handleCanvasTouch2 = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    //     const overlayCanvas = overlayCanvasRef.current;
+    //     if (!overlayCanvas) return;
+    //
+    //     const overlayCtx = overlayCanvas.getContext("2d");
+    //     if (!overlayCtx) return;
+    //
+    //     const rect = overlayCanvas.getBoundingClientRect();
+    //     const touch = e.touches[0]; // 첫 번째 터치 이벤트 가져오기
+    //     const x = Math.max(0, Math.floor((touch.clientX - rect.left) / (PIXEL_SIZE * scale)));
+    //     const y = Math.max(0, Math.floor((touch.clientY - rect.top) / (PIXEL_SIZE * scale)));
+    //
+    //     overlayCtx.fillStyle = selectedColor;
+    //     overlayCtx.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+    //
+    //     setPixelPosition({ x, y });
+    // };
+
     return (
         <div style={{
             position: "relative",
@@ -45,7 +64,7 @@ const MobileCanvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
         }}
         >
             <canvas
-                className="image-rendering-pixelated"
+                className="image-rendering-pixelated absolute"
                 ref={canvasRef}
                 width={PIXEL_HORIZONTAL_COUNT * PIXEL_SIZE}
                 height={PIXEL_VERTICAL_COUNT * PIXEL_SIZE}
@@ -54,8 +73,8 @@ const MobileCanvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
             <div
                 style={{
                     position: "absolute",
-                    top: pixelPosition.y * PIXEL_SIZE,
-                    left: pixelPosition.x * PIXEL_SIZE,
+                    top: Math.round(pixelPosition.y) * PIXEL_SIZE,
+                    left: Math.round(pixelPosition.x) * PIXEL_SIZE,
                     width: `${PIXEL_SIZE}px`,
                     height: `${PIXEL_SIZE}px`,
                     backgroundColor: `${selectedColor}`,

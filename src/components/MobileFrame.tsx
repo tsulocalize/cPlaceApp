@@ -11,7 +11,7 @@ const MobileFrame:React.FC<FrameProps> = ({selectedColor}) => {
         <div style={{
             display: "absolute",
             overflow: "hidden",
-            border: "1px solid black"
+            border: "1px solid black",
         }}
              >
             <MobileCanvasContainer selectedColor={selectedColor}/>
