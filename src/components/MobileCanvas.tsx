@@ -44,6 +44,19 @@ const MobileCanvas: React.FC<CanvasProps> = ({selectedColor, scale}) => {
         setPixelPosition({ x, y });
     };
 
+    useEffect(() => {
+        const overlayCanvas = overlayCanvasRef.current;
+        if (!overlayCanvas) return;
+
+        const overlayCtx = overlayCanvas.getContext("2d");
+        if (!overlayCtx) return;
+
+        if (!prevPixelPosition) return;
+
+        overlayCtx.fillStyle = selectedColor;
+        overlayCtx.fillRect(prevPixelPosition.x * PIXEL_SIZE, prevPixelPosition.y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+    }, [selectedColor]);
+
     const handleCanvasTouch2 = (e: React.TouchEvent<HTMLCanvasElement>) => {
         const overlayCanvas = overlayCanvasRef.current;
         if (!overlayCanvas) return;
