@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import guide1 from "../assets/guide1.webp";
-import guide2 from "../assets/guide2.png";
+import guide2 from "../assets/guide2.webp";
 import guide3 from "../assets/guide3.webp";
 
 interface GuideModalProps {
