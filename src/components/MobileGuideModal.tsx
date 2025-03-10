@@ -20,13 +20,13 @@ const steps = [
     { title: "아래 규칙을 잘 지켜주세요",
         text: (
             <>
-            <span className="text-xl">
+            <span className="text-lg">
                 <strong>✅ 허용되는 것</strong> <br/>
             </span>
                 - 협력해서 그림 지켜내기 <br/>
                 - 다른 그림 영역 침범하기 <br/>
                 <br/>
-            <span className="text-xl">
+            <span className="text-lg">
                 <strong>🚫 허용되지 않는 것</strong> <br/>
             </span>
                 - 다른 유저에게 불쾌감을 줄 수 있는 그림 <br/>
@@ -75,8 +75,8 @@ export default function MobileGuideModal({isOpen, onClose}: GuideModalProps) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
-                <h2 className="font-bold mb-4 text-2xl text-black">{steps[currentStep].title}</h2>
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs w-full text-center">
+                <h2 className="font-bold mb-4 text-xl text-black">{steps[currentStep].title}</h2>
                 <img src={steps[currentStep].image} alt={`Guide step ${currentStep + 1}`} className="mb-4 w-full h-auto rounded" />
                 <p className="font-sans mb-4 text-left text-base text-black whitespace-pre-line">{steps[currentStep].text}</p>
                 <div className="flex flex-col items-center">
