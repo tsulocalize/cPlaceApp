@@ -61,12 +61,12 @@ function MobileHome() {
                     <MobileCoordinateDisplay/>
                     <MobileZoomController key="plus" isPlus={true}/>
                 </div>
-                    <div className="flex flex-col gap-5 mt-32">
-                        <MobileFrame selectedColor={selectedColor}/>
-                        <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
-                    </div>
-                    <MobileTimerButton onTouch={updateColor} timeLimit={import.meta.env.VITE_TIME_LIMIT}
-                                       selectedColor={selectedColor}/>
+                <div className="flex flex-col gap-5 mt-32">
+                    <MobileFrame selectedColor={selectedColor}/>
+                    <ColorPalette selectedColor={selectedColor} onSelectColor={handleColorSelect} isMobile={true}/>
+                </div>
+                <MobileTimerButton onTouch={updateColor} timeLimit={import.meta.env.VITE_TIME_LIMIT}
+                                   selectedColor={selectedColor}/>
             </ZoomProvider>
         </div>
     );

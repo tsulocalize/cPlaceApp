@@ -47,8 +47,6 @@ const MobileCanvasContainer:React.FC<CanvasContainerProps> = ({selectedColor}) =
         startPosition.current = { x: touch.clientX, y: touch.clientY };
     };
 
-    console.log(position.x, position.y)
-
     return (
         <div
             ref={containerRef}

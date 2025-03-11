@@ -15,8 +15,6 @@ function App() {
     );
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-    console.log(isAuthenticated);
-
     return (
         <PixelPositionProvider>
         <ScaleProvider>

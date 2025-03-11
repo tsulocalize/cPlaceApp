@@ -20,7 +20,6 @@ const LoginRoute:React.FC<LoginRouteProp> = ({isAuthenticated, setIsAuthenticate
                 alert("이미 로그인 되어 있습니다.");
                 return;
             }
-            console.log("AAAAAAAA");
 
             const authenticated = await tokenLogin();
             if (!authenticated) {
