@@ -41,7 +41,11 @@ const CanvasContainer:React.FC<CanvasContainerProps> = ({selectedColor}) => {
     const handleWheel = (e: WheelEvent) => {
         e.preventDefault();
 
-        setScale(Math.min(Math.max(scale - (e.deltaY * 0.0005), MIN_ZOOM), MAX_ZOOM));
+        const scaleChange = e.deltaY * 0.0005 > 0 ?
+            Math.max(0.02, e.deltaY * 0.0005) :
+            Math.min(-0.02, e.deltaY * 0.0005);
+
+        setScale(Math.min(Math.max(scale - scaleChange, MIN_ZOOM), MAX_ZOOM));
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false });
