@@ -1,13 +1,13 @@
 export enum Color {
     // Primary Colors
-    RED = "#FF0000",
-    BLUE = "#0000FF",
-    YELLOW = "#FFFF00",
+    RED = "#EE2222",
+    BLUE = "#2222EE",
+    YELLOW = "#EEEE22",
 
     // Secondary Colors
-    GREEN = "#008000",
-    ORANGE = "#FFA500",
-    PURPLE = "#800080",
+    GREEN = "#228022",
+    ORANGE = "#FFA522",
+    PURPLE = "#802280",
 
     // Neutral Colors
     BLACK = "#000000",
@@ -17,13 +17,15 @@ export enum Color {
     BROWN = "#8B4513",
 
     // Accent or Tertiary Colors
-    CYAN = "#00FFFF",
-    MAGENTA = "#FF00FF",
-    LIME = "#00FF00",
+    CYAN = "#22EEEE",
+    MAGENTA = "#EE22EE",
+    LIME = "#22EE22",
 
     // Additional Warmth/Coolness
-    LIGHT_BLUE = "#ADD8E6",
+    SKIN = "#F4D9CB",
     CORAL = "#FF7F50",
+
+    NONE = "",
 }
 
 export const PALETTE_COLORS = [
@@ -31,5 +33,5 @@ export const PALETTE_COLORS = [
     Color.GREEN, Color.ORANGE, Color.PURPLE, // Secondary
     Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BROWN, // Neutral
     Color.CYAN, Color.MAGENTA, Color.LIME, // Accent
-    Color.LIGHT_BLUE, Color.CORAL // Additional
+    Color.SKIN, Color.CORAL // Additional
 ];
