@@ -4,7 +4,6 @@ import {getGlobalCanvasRef} from "./usePixelQueue.ts";
 
 
 export const useInitialize = () => {
-
     const drawMap = (buffer:Uint8Array, offset:number) => {
         const pixelData = new Uint8Array(PIXEL_HORIZONTAL_COUNT * PIXEL_VERTICAL_COUNT * 4);
         for (let i = offset; i < buffer.length; i++) {

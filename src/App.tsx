@@ -7,6 +7,7 @@ import {PixelPositionProvider} from "./hooks/PixelPositionContext.tsx";
 import MobileHome from "./MobileHome.tsx";
 import MobileGuideModal from "./components/MobileGuideModal.tsx";
 import {ScaleProvider} from "./hooks/ScaleContext.tsx";
+import HistoryHome from "./HistoryHome.tsx";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +33,19 @@ function App() {
                                     <div>
                                         <GuideModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
                                         <Home />
+                                    </div>
+                                : <LoginRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+                        }
+                    />
+                    <Route
+                        path="/history"
+                        element={
+                            isAuthenticated ?
+                                isMobile ?
+                                    <div>
+                                    </div> :
+                                    <div>
+                                        <HistoryHome />
                                     </div>
                                 : <LoginRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
                         }

@@ -11,6 +11,7 @@ import TimerButton from "./components/TimerButton.tsx";
 import {Color} from "./constants/colors.ts";
 import {usePixelQueue} from "./hooks/usePixelQueue.ts";
 import {useInitialize} from "./hooks/useInitailize.ts";
+import UserCounter from "./components/UserCounter.tsx";
 
 function Home() {
     const [selectedColor, setSelectedColor] = useState(Color.BLACK);
@@ -22,22 +23,22 @@ function Home() {
 
     useEffect(() => {
         getPixels()
-                .then(buffer => {
-                    lastUpdated.current = getLongFromUint8Array(buffer);
-                    drawMap(buffer, 8);
-                }).then(() => {
-                    getDirtySet(lastUpdated.current!)
-                        .then(buffer => {
-                            const dataView = new DataView(buffer.buffer);
-                            for (let i = 0; i < dataView.byteLength; i += 6) {
-                                const x = dataView.getUint16(i, false);
-                                const y = dataView.getUint16(i + 2, false);
-                                const colorIndex = dataView.getUint8(i + 4);
+            .then(buffer => {
+                lastUpdated.current = getLongFromUint8Array(buffer);
+                drawMap(buffer, 8);
+            }).then(() => {
+                getDirtySet(lastUpdated.current!)
+                    .then(buffer => {
+                        const dataView = new DataView(buffer.buffer);
+                        for (let i = 0; i < dataView.byteLength; i += 6) {
+                            const x = dataView.getUint16(i, false);
+                            const y = dataView.getUint16(i + 2, false);
+                            const colorIndex = dataView.getUint8(i + 4);
 
-                                addPixelToQueue(x, y, Object.values(Color)[colorIndex]);
-                            }
-                        })
-                    setIsLoading(false);
+                            addPixelToQueue(x, y, Object.values(Color)[colorIndex]);
+                        }
+                    })
+                setIsLoading(false);
         });
     }, []);
 
@@ -55,6 +56,7 @@ function Home() {
     return (
         <div className="flex">
             <ZoomProvider>
+                <UserCounter/>
                 <CoordinateDisplay/>
                 <div className="fixed left-0 top-0 flex-col items-start h-screen z-40 w-[4%]">
                     <div className="absolute w-full">

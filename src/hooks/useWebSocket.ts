@@ -38,7 +38,9 @@ export const useWebSocket = (isLoading: boolean) => {
             ws.onclose = () => {
                 console.log("🔴 WebSocket 연결 종료");
                 socketRef.current = null;
-                alert("서버와 연결이 종료되었습니다.");
+                setTimeout(() => {
+                    alert("서버와 연결이 종료되었습니다.");
+                }, 1000); // 모바일 탭 전환 오류 방지용
             };
 
             socketRef.current = ws;
