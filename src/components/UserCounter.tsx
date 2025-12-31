@@ -7,7 +7,7 @@ function UserCounter() {
     useEffect(() => {
         const fetchUserCount = async () => {
             const userCount = await getUserCount();
-            if (!userCount) {
+            if (userCount === null) {
                 clearInterval(intervalId);
             } else {
                 setCount(userCount)
